@@ -9,6 +9,7 @@ import dessertimg from "../../assets/menu/dessert-bg.jpeg";
 import pizzaimg from "../../assets/menu/pizza-bg.jpg";
 import saladimg from "../../assets/menu/salad-bg.jpg";
 import soupimg from "../../assets/menu/soup-bg.jpg";
+import { Link } from "react-router-dom";
 
 const Menu = () => {
   const [menu] = useMenu();
@@ -23,7 +24,11 @@ const Menu = () => {
       <Helmet>
         <title>Menu</title>
       </Helmet>
-      <Cover img={menuImg} title={"Our Menu"}></Cover>
+      <Cover
+        img={menuImg}
+        title={"Our Menu"}
+        para="Would you like to try a dish?"
+      ></Cover>
       <Sectiontitle
         title="TODAY'S OFFER"
         subtitle={"---Don't miss---"}
@@ -31,35 +36,16 @@ const Menu = () => {
       {/* {console.log(offered)} */}
       <MenuCategory items={offered}></MenuCategory>
 
-      <div className=" flex justify-center items-center">
-        <button className="btn btn-outline text-black border-0 border-b-4 my-4">
-          ORDER YOUR FAVOURITE FOOD
-        </button>
-      </div>
-
       <MenuCategory
         items={dessert}
         title={"dessert"}
         img={dessertimg}
       ></MenuCategory>
-      <div className=" flex justify-center items-center">
-        <button className="btn btn-outline text-black border-0 border-b-4 my-4">
-          ORDER YOUR FAVOURITE FOOD
-        </button>
-      </div>
 
       <MenuCategory items={pizza} title={"pizza"} img={pizzaimg}></MenuCategory>
-      <div className=" flex justify-center items-center">
-        <button className="btn btn-outline text-black border-0 border-b-4 my-4">
-          ORDER YOUR FAVOURITE FOOD
-        </button>
-      </div>
+
       <MenuCategory items={salad} title={"salad"} img={saladimg}></MenuCategory>
-      <div className=" flex justify-center items-center">
-        <button className="btn btn-outline text-black border-0 border-b-4 my-4">
-          ORDER YOUR FAVOURITE FOOD
-        </button>
-      </div>
+
       <MenuCategory items={soup} title={"soup"} img={soupimg}></MenuCategory>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { Parallax, Background } from "react-parallax";
 
-const Cover = ({ img, title }) => {
+const Cover = ({ img, title, para }) => {
   return (
     <div>
       <Parallax
@@ -16,14 +16,14 @@ const Cover = ({ img, title }) => {
             backgroundImage: `url("${img}")`,
           }}
         >
-          <div className="hero-overlay w-[40rem] h-[16rem] bg-opacity-60"></div>
+          <div className="hero-overlay md:w-[40rem] w-[20rem] h-[16rem] bg-opacity-60"></div>
           <div className="hero-content text-neutral-content text-center">
             <div className="max-w-md">
               <h1 className="mb-5 text-5xl font-bold uppercase">{title}</h1>
               <p className="mb-5">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                assumenda excepturi exercitationem quasi. In deleniti eaque aut
-                repudiandae et a id nisi.
+                {para
+                  ? para
+                  : "Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}
               </p>
             </div>
           </div>

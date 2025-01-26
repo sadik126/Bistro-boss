@@ -11,6 +11,9 @@ const Navber = () => {
       <li>
         <Link to="/menu">Menu</Link>
       </li>
+      <li>
+        <Link to="/order">Order food</Link>
+      </li>
     </>
   );
   return (
