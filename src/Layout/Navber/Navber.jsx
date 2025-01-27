@@ -12,7 +12,10 @@ const Navber = () => {
         <Link to="/menu">Menu</Link>
       </li>
       <li>
-        <Link to="/order">Order food</Link>
+        <Link to="/order/salad">Order food</Link>
+      </li>
+      <li>
+        <Link to="/login">Login</Link>
       </li>
     </>
   );
