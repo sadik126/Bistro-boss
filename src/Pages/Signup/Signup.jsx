@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import img from "../../assets/others/authentication2.png";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../Authprovider/Authprovider";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const {
@@ -131,12 +132,19 @@ const Signup = () => {
 
               <div className="form-control mt-6">
                 <input
-                  className="btn btn-primary"
+                  className="btn bg-orange-500"
                   type="submit"
                   value="Sign up"
                 />
               </div>
             </form>
+            <p className="uppercase text-center">
+              Already have account?{" "}
+              <Link className="text-orange-500" to="/login">
+                {" "}
+                Go for login
+              </Link>
+            </p>
           </div>
         </div>
       </div>

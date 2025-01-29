@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import img from "../../assets/others/authentication2.png";
+import Swal from 'sweetalert2'
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
@@ -25,12 +26,29 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    // signIn(email, password).then((res) => {
-    //   const user = res.user;
-    //   console.log(user);
-    // });
+    signIn(email, password).then((res) => {
+      const user = res.user;
+      console.log(user);
+      Swal.fire({
+        title: "User login successfully",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        hideClass: {
+          popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+          `
+        }
+      });
+    });
 
-    console.log("clicked", email, password, captchavalue);
+    console.log("clicked", email, password);
   };
 
   const handleCaptcha = () => {
