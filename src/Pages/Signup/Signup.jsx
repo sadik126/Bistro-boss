@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import img from "../../assets/others/authentication2.png";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../Authprovider/Authprovider";
 
 const Signup = () => {
   const {
@@ -8,9 +9,17 @@ const Signup = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    trigger,
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const { createUser } = useContext(AuthContext);
+
+  const onSubmit = (data) => {
+    console.log(data);
+    createUser(data.email, data.password).then((res) => {
+      console.log(res.user);
+    });
+  };
   return (
     <div>
       {" "}
@@ -41,6 +50,7 @@ const Signup = () => {
                       ? "input input-bordered input-error"
                       : "input input-bordered"
                   }
+                  onKeyUp={() => trigger("name")}
                   // onKeyUp={(e) => console.log("Typing:", e.target.value)}
                 />
                 {errors.name && (
@@ -65,7 +75,7 @@ const Signup = () => {
                       ? "input input-bordered input-error"
                       : "input input-bordered"
                   }
-                  onKeyUp={(e) => console.log("Typing:", e.target.value)}
+                  onKeyUp={() => trigger("email")}
                 />
                 {errors.email?.type === "required" && (
                   <span className="text-red-500">please enter your email</span>
@@ -95,6 +105,7 @@ const Signup = () => {
                       ? "input input-bordered input-error"
                       : "input input-bordered"
                   }
+                  onKeyUp={() => trigger("password")}
                 />
                 {errors.password?.type === "required" && (
                   <span className="text-red-500">
