@@ -5,7 +5,9 @@ import Navber from "./Navber/Navber";
 
 const Main = () => {
   const location = useLocation();
-  const noheader = location.pathname.includes("login");
+  const noheader =
+    location.pathname.includes("login") || location.pathname.includes("signup");
+
   return (
     <div>
       {noheader || <Navber></Navber>}
