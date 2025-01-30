@@ -1,30 +1,80 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Pages/Authprovider/Authprovider";
+import {
+  FaBowlFood,
+  FaCartShopping,
+  FaCircleUser,
+  FaClipboardList,
+  FaDoorClosed,
+  FaDoorOpen,
+  FaHouse,
+} from "react-icons/fa6";
 
 const Navber = () => {
   const { user, logOut } = useContext(AuthContext);
   const navOptions = (
     <>
       <li>
-        <Link to="/">Home</Link>
+        <Link to="/">
+          {" "}
+          <FaHouse></FaHouse> Home
+        </Link>
       </li>
 
       <li>
-        <Link to="/menu">Menu</Link>
+        <Link to="/menu">
+          {" "}
+          <FaClipboardList /> Menu
+        </Link>
       </li>
       <li>
-        <Link to="/order/salad">Order food</Link>
+        <Link to="/order/salad">
+          {" "}
+          <FaBowlFood /> Order food
+        </Link>
+      </li>
+      <li>
+        <Link to="/order/salad">
+          {" "}
+          <button>
+            <FaCartShopping className="mr-2" />
+            <div className="badge badge-secondary ">+99</div>
+          </button>
+        </Link>
       </li>
       <li>
         {user ? (
-          <Link to="/">
-            <button onClick={logOut} className="text-white">
-              Logout
-            </button>
-          </Link>
+          <button onClick={logOut}>
+            {/* <button onClick={logOut} className="text-white">
+              
+            </button> */}
+            <FaDoorClosed /> Logout
+          </button>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link to="/login">
+            {" "}
+            <FaDoorOpen /> Login
+          </Link>
+        )}
+      </li>
+      <li>
+        {user && (
+          <div className="avatar">
+            <div className="w-8 rounded-full">
+              {user?.photoURL !== null ? (
+                <>
+                  <img src={user?.photoURL} alt="" />
+                </>
+              ) : (
+                <>
+                  <FaCircleUser style={{ width: "30px", height: "30px" }} />
+                </>
+              )}
+              {/* <img src={user?.photoURL} alt="" /> */}
+              {console.log(user)}
+            </div>
+          </div>
         )}
       </li>
     </>
@@ -60,7 +110,7 @@ const Navber = () => {
           <a className="btn btn-ghost text-xl">BISTRO BOSS</a>
         </div>
         <div className="navbar-end hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navOptions}</ul>
+          <ul className="menu menu-horizontal px-1 ">{navOptions}</ul>
         </div>
         {/* <div className="navbar-end">
           <a className="btn">Button</a>

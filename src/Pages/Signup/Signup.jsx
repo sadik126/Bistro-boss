@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import img from "../../assets/others/authentication2.png";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../Authprovider/Authprovider";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Signup = () => {
   const {
@@ -11,14 +12,31 @@ const Signup = () => {
     watch,
     formState: { errors },
     trigger,
+    reset,
   } = useForm();
 
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
     createUser(data.email, data.password).then((res) => {
-      console.log(res.user);
+      updateUserProfile(data.name)
+        .then(() => {
+          console.log("user updated");
+          reset();
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "User created successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
+        })
+        .catch((error) => console.log(error));
+      // console.log(res.user);
     });
   };
   return (
@@ -138,7 +156,7 @@ const Signup = () => {
                 />
               </div>
             </form>
-            <p className="uppercase text-center">
+            <p className="uppercase text-center p-5">
               Already have account?{" "}
               <Link className="text-orange-500" to="/login">
                 {" "}

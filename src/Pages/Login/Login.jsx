@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import img from "../../assets/others/authentication2.png";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
@@ -8,13 +8,16 @@ import {
   validateCaptcha,
 } from "react-simple-captcha";
 import { AuthContext } from "../Authprovider/Authprovider";
-import { Link } from "react-router-dom";
+import { Link, replace, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const captcharef = useRef(null);
   const [disabled, setDisabled] = useState(true);
 
   const { signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   useEffect(() => {
     loadCaptchaEnginge(4);
   }, []);
@@ -36,16 +39,17 @@ const Login = () => {
             animate__animated
             animate__fadeInUp
             animate__faster
-          `
+          `,
         },
         hideClass: {
           popup: `
             animate__animated
             animate__fadeOutDown
             animate__faster
-          `
-        }
+          `,
+        },
       });
+      navigate(from, { replace: true });
     });
 
     console.log("clicked", email, password);
