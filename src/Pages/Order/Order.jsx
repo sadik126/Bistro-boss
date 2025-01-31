@@ -31,16 +31,16 @@ const Order = () => {
         para="Would you like to try a dish?"
       ></Cover>
 
-      <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-        <TabList className="md:w-1/2 mx-auto text-center">
-          <Tab>Salad</Tab>
+      <Tabs  selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+        <TabList  className="md:w-1/2 mx-auto text-center">
+          <Tab >Salad</Tab>
           <Tab>Pizza</Tab>
           <Tab>Soups</Tab>
           <Tab>Desserts</Tab>
           <Tab>Drinks</Tab>
         </TabList>
 
-        <TabPanel>
+        <TabPanel >
           <Ordertab items={salad}></Ordertab>
         </TabPanel>
         <TabPanel>

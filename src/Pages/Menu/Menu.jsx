@@ -10,15 +10,20 @@ import pizzaimg from "../../assets/menu/pizza-bg.jpg";
 import saladimg from "../../assets/menu/salad-bg.jpg";
 import soupimg from "../../assets/menu/soup-bg.jpg";
 import { Link } from "react-router-dom";
+import Loading from "../Loading/Loading";
 
 const Menu = () => {
-  const [menu] = useMenu();
+  const [menu , loading] = useMenu();
   // console.log(menu);
   const dessert = menu.filter((item) => item.category === "dessert");
   const soup = menu.filter((item) => item.category === "soup");
   const offered = menu.filter((item) => item.category === "offered");
   const salad = menu.filter((item) => item.category === "salad");
   const pizza = menu.filter((item) => item.category === "pizza");
+
+  if (loading){
+    return  <Loading></Loading>;
+  } 
   return (
     <div>
       <Helmet>

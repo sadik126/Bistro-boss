@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import Sectiontitle from "../../Layout/Sectiontitle/Sectiontitle";
 import Menuitem from "../../Layout/Menuitem/Menuitem";
 import useMenu from "../useMenu/useMenu";
+import Loading from "../Loading/Loading";
 
 const Popularmenu = () => {
-  const [menu] = useMenu();
+  const [menu , loading] = useMenu();
   const popular = menu.filter((item) => item.category === "popular");
   // const [menuData, setMenuData] = useState([]);
   // useEffect(() => {
@@ -15,6 +16,9 @@ const Popularmenu = () => {
   //       setMenuData(popularItems);
   //     });
   // }, []);
+  if (loading){
+    return  <Loading></Loading>;
+  } 
   return (
     <section className="my-12 md:w-3/4 mx-auto px-6">
       <Sectiontitle
