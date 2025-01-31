@@ -14,9 +14,12 @@ import Loading from "./Pages/Loading/Loading.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    
-        <Authprovider>
-      <HelmetProvider>
+
+<Authprovider>
+
+<QueryClientProvider client={queryClient}>
+
+<HelmetProvider>
         <div className="max-w-screen-xl mx-auto">
           <RouterProvider router={router}></RouterProvider>
           <Toaster
@@ -25,7 +28,13 @@ createRoot(document.getElementById("root")).render(
 />
         </div>
       </HelmetProvider>
+</QueryClientProvider>
+     
     </Authprovider>
+
+
+    
+       
     
    
   </StrictMode>
