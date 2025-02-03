@@ -10,9 +10,11 @@ import {
   FaDoorOpen,
   FaHouse,
 } from "react-icons/fa6";
+import Usecart from "../../Pages/Usecart/Usecart";
 
 const Navber = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [cart] = Usecart()
   const navOptions = (
     <>
       <li>
@@ -39,7 +41,7 @@ const Navber = () => {
           {" "}
           <button>
             <FaCartShopping className="mr-2" />
-            <div className="badge badge-secondary ">+99</div>
+            <div className="badge badge-secondary ">+{cart.length}</div>
           </button>
         </Link>
       </li>

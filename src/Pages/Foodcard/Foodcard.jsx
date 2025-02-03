@@ -7,10 +7,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Useaxiossecure from "../Useaxiossecure/Useaxiossecure";
 import Loading from "../Loading/Loading";
+import Usecart from "../Usecart/Usecart";
 
 const Foodcard = ({ item }) => {
   const { name, image, price, recipe, _id } = item;
   const { user } = useContext(AuthContext);
+  const [,refetch] = Usecart()
   const [loading , setLoading] = useState(false)
   const navigate = useNavigate();
   const location = useLocation();
@@ -68,6 +70,7 @@ const Foodcard = ({ item }) => {
             </div>
           ))
         }
+        refetch()
       })
       .catch((error) => {
         console.error("Error:", error.response?.data || error.message);
@@ -115,7 +118,7 @@ const Foodcard = ({ item }) => {
         <p>{recipe}</p>
         <div className="card-actions">
           <button
-            onClick={() => handlecart(item)}
+            onClick={handlecart}
             className="btn btn-outline text-orange-400 border-0 border-b-4 my-4"
           >
             Add to cart
