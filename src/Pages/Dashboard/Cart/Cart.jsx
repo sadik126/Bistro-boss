@@ -8,8 +8,8 @@ const Cart = () => {
         <>
           <div className='flex justify-evenly'>
             <h2 className='text-4xl  font-extrabold'>Items: {cart.length>0 ? cart.length :'Sorry you dont have any item right now'}</h2>
-            <h2 className='text-4xl'>Total price: ${totalprice}</h2>
-            <button className="btn-primary btn">Pay</button>
+            <h2 className='text-4xl font-extrabold'>Total price: $ <span className='text-orange-500'>{totalprice}</span>  </h2>
+            <button className="btn-primary btn bg-orange-500 border-black hover:bg-slate-50 border-black">Pay</button>
            
         
         </div>
