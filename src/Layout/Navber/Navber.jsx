@@ -37,7 +37,7 @@ const Navber = () => {
         </Link>
       </li>
       <li>
-        <Link to="/order/salad">
+        <Link to="/dashboard/cart">
           {" "}
           <button>
             <FaCartShopping className="mr-2" />
