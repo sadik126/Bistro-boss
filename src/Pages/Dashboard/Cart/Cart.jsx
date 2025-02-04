@@ -8,7 +8,7 @@ const Cart = () => {
         <>
           <div className='flex justify-evenly'>
             <h2 className='text-4xl  font-extrabold'>Items: {cart.length>0 ? cart.length :'Sorry you dont have any item right now'}</h2>
-            <h2 className='text-4xl'>Total price:${totalprice}</h2>
+            <h2 className='text-4xl'>Total price: ${totalprice}</h2>
             <button className="btn-primary btn">Pay</button>
            
         
