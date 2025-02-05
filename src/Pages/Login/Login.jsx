@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import img from "../../assets/others/authentication2.png";
+import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import {
   loadCaptchaEnginge,
@@ -10,9 +11,11 @@ import {
 import { AuthContext } from "../Authprovider/Authprovider";
 import { Link, replace, useLocation, useNavigate } from "react-router-dom";
 
+
 const Login = () => {
   const captcharef = useRef(null);
   const [disabled, setDisabled] = useState(true);
+  const {googleSignin} = useContext(AuthContext);
 
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -137,6 +140,13 @@ const Login = () => {
                   want to create an account?
                 </Link>
               </p>
+              <div className="divider">OR Sign In With</div>
+             
+              <button onClick={googleSignin} className="btn bg-orange-300">
+            
+              <FcGoogle />
+              Button
+              </button>
             </form>
           </div>
         </div>

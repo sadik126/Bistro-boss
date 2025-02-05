@@ -4,8 +4,11 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../Authprovider/Authprovider";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import axiosPublic from "../axiosPublic/axiosPublic";
+
 
 const Signup = () => {
+  const allaxios = axiosPublic()
   const {
     register,
     handleSubmit,
@@ -24,16 +27,26 @@ const Signup = () => {
     createUser(data.email, data.password).then((res) => {
       updateUserProfile(data.name)
         .then(() => {
+          const userinfo = {
+            name: data.name,
+            email: data.email
+          }
           console.log("user updated");
-          reset();
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "User created successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          navigate("/");
+          allaxios.post('/users' , userinfo)
+          .then(res => {
+            if(res.data.insertedId){
+              reset();
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "User created successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate("/");
+            }
+          })
+        
         })
         .catch((error) => console.log(error));
       // console.log(res.user);

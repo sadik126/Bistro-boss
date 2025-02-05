@@ -2,14 +2,48 @@ import React from 'react';
 import Usecart from '../../Usecart/Usecart';
 import { FaTrashCan } from 'react-icons/fa6';
 import Loading from '../../Loading/Loading';
+import { axiosSecure } from '../../Useaxiossecure/Useaxiossecure';
+import Swal from 'sweetalert2';
 
 const Cart = () => {
-    const [cart , isPending] = Usecart()
+    const [cart , refetch , isPending , error] = Usecart()
     const totalprice = cart.reduce((total , item)=> total + item.price , 0)
 
     if(isPending){
         return <Loading></Loading>
     }
+
+
+    const handleDelete = (id) => {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/carts/${id}`)
+                .then(res=> {
+                 if(res.data.deletedCount > 0){
+                    refetch()
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                      });
+                 }
+                })
+            
+            }
+          });
+      
+    }
+
+   
     return (
         <>
           <div className='flex justify-evenly'>
@@ -35,6 +69,7 @@ const Cart = () => {
   <tbody>
     {/* row 1 */}
     {
+        cart.length === 0 ? 'sorry you dont have any product right now' :
               cart.map((item, index) => <tr key={item._id} className="bg-base-200">
                   <th>{index +1}</th>
                   <td> <div className="avatar">
@@ -46,7 +81,7 @@ const Cart = () => {
             </div></td>
                   <td>{item.name}</td>
                   <td>{item.price}</td>
-                  <td> <button className="btn bg-red-700 text-white btn-xs"><FaTrashCan width={'200px'} /></button></td>
+                  <td> <button onClick={()=> handleDelete(item._id)} className="btn bg-red-700 text-white btn-xs"><FaTrashCan width={'200px'} /></button></td>
                 </tr>)
           }
     
