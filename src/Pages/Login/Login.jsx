@@ -10,12 +10,16 @@ import {
 } from "react-simple-captcha";
 import { AuthContext } from "../Authprovider/Authprovider";
 import { Link, replace, useLocation, useNavigate } from "react-router-dom";
+import axiosPublic from "../axiosPublic/axiosPublic";
 
 
 const Login = () => {
   const captcharef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const {googleSignin} = useContext(AuthContext);
+  const axiospublic = axiosPublic();
+  
+
 
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -24,6 +28,39 @@ const Login = () => {
   useEffect(() => {
     loadCaptchaEnginge(4);
   }, []);
+
+  const handleGoogleSignIn = () => {
+    googleSignin()
+    .then(result => {
+      console.log(result.user);
+      const userInfo = {
+        email:result.user?.email,
+        name:result.user?.displayName
+      }
+      axiospublic.post('/users' , userInfo)
+      .then(res => {
+        console.log(res.data)
+        // Swal.fire({
+        //   title: "User login successfully",
+        //   showClass: {
+        //     popup: `
+        //       animate__animated
+        //       animate__fadeInUp
+        //       animate__faster
+        //     `,
+        //   },
+        //   hideClass: {
+        //     popup: `
+        //       animate__animated
+        //       animate__fadeOutDown
+        //       animate__faster
+        //     `,
+        //   },
+        // });
+        navigate("/");
+      })
+    })
+  }
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -142,7 +179,7 @@ const Login = () => {
               </p>
               <div className="divider">OR Sign In With</div>
              
-              <button onClick={googleSignin} className="btn bg-orange-300">
+              <button onClick={handleGoogleSignIn} className="btn bg-orange-300">
             
               <FcGoogle />
               Button
