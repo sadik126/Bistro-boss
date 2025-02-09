@@ -75,7 +75,7 @@ const Allusers = () => {
 
             </div>
 
-            <div className="overflow-x-auto h-screen p-5">
+            <div  className="overflow-x-auto h-screen p-5">
   <table className="table w-full ">
     {/* head */}
     <thead className='bg-orange-400'>

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 const Cart = () => {
     const [cart , refetch , isPending , error] = Usecart()
     const totalprice = cart.reduce((total , item)=> total + item.price , 0)
+    console.log(cart)
 
     if(isPending){
         return <Loading></Loading>
@@ -75,12 +76,12 @@ const Cart = () => {
                   <td> <div className="avatar">
               <div className="mask mask-squircle h-12 w-12">
                 <img
-                  src={item.image}
+                  src={item?.image}
                   alt="Avatar Tailwind CSS Component" />
               </div>
             </div></td>
-                  <td>{item.name}</td>
-                  <td>{item.price}</td>
+                  <td>{item?.name}</td>
+                  <td>{item?.price}</td>
                   <td> <button onClick={()=> handleDelete(item._id)} className="btn bg-red-700 text-white btn-xs"><FaTrashCan width={'200px'} /></button></td>
                 </tr>)
           }

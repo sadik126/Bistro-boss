@@ -6,10 +6,18 @@ import { ImSpoonKnife } from "react-icons/im";
 import { IoIosMenu } from "react-icons/io";
 import { FaBook } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
+import { use } from 'react';
+import Useadmin from '../Useadmin/Useadmin';
+import Loading from '../Loading/Loading';
 
 
 const Dashboard = () => {
-    const isAdmin = true;
+    const [isAdmin , isAdminloading] = Useadmin();
+
+    if(isAdminloading){
+        return <Loading></Loading>
+    }
+    console.log(isAdmin)
     return (
         <div className='flex'>
          
@@ -22,7 +30,7 @@ const Dashboard = () => {
             
                 <ul className='menu p-4'>
                     {
-                        isAdmin ? <>
+                        isAdmin  ? <>
                          <li><NavLink to="/dashboard/adminhome"> <FaHouseUser />Admin Home</NavLink></li>
                     <li><NavLink to="/dashboard/additems"> <ImSpoonKnife /> Add Items</NavLink></li>
                     <li><NavLink to="/dashboard/manageitems"> <IoIosMenu /> Manage Items</NavLink></li>

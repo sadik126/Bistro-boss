@@ -27,7 +27,7 @@ const Foodcard = ({ item }) => {
         image: food.image,
         price: food.price,
       };
-      console.log(cartItem);
+      console.log(cartItem , food);
 
       axiosSecure.post("/carts", cartItem).then((res) => {
         console.log(res.data);
@@ -118,7 +118,7 @@ const Foodcard = ({ item }) => {
         <p>{recipe}</p>
         <div className="card-actions">
           <button
-            onClick={handlecart}
+            onClick={()=>handlecart(item)}
             className="btn btn-outline text-orange-400 border-0 border-b-4 my-4"
           >
             Add to cart

@@ -58,7 +58,7 @@ const Authprovider = ({ children }) => {
       setUser(currentUser);
 
       if(currentUser){
-        console.log(currentUser)
+        // console.log(currentUser)
           const userInfo = {
             email: currentUser.email,
           }
@@ -74,12 +74,14 @@ const Authprovider = ({ children }) => {
           localStorage.removeItem('access-token')
       }
 
+      
+
       setLoading(false);
     });
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [axiospublic]);
   const authinfo = {
     user,
     loading,

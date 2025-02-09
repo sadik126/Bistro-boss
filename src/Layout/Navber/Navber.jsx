@@ -74,7 +74,7 @@ const Navber = () => {
                 </>
               )}
               {/* <img src={user?.photoURL} alt="" /> */}
-              {console.log(user)}
+              {/* {console.log(user)} */}
             </div>
           </div>
         )}
