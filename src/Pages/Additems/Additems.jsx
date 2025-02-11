@@ -2,10 +2,49 @@ import React from 'react';
 import Sectiontitle from '../../Layout/Sectiontitle/Sectiontitle';
 import { useForm } from "react-hook-form"
 import { ImSpoonKnife } from 'react-icons/im';
+import axiosPublic from '../axiosPublic/axiosPublic';
+import Useaxiossecure, { axiosSecure } from '../Useaxiossecure/Useaxiossecure';
+import Swal from 'sweetalert2';
 
+
+
+const image_api = import.meta.env.VITE_IMAGE_KEY;
+const imageurl = `https://api.imgbb.com/1/upload?&key=${image_api}`;
 const Additems = () => {
-  const { register, handleSubmit } = useForm()
-  const onSubmit = (data) => console.log(data)
+  const { register, handleSubmit, reset } = useForm()
+  const axiospublic = axiosPublic()
+  const axiossecuredata = Useaxiossecure()
+  const onSubmit = async (data) => {
+    const imagefile = { image: data.image[0] }
+    const res = await axiospublic.post(imageurl, imagefile, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    if (res.data.success) {
+      const item = {
+        name: data.name,
+        category: data.category,
+        price: parseFloat(data.price),
+        recipe: data.recipe,
+        image: res.data.data.display_url
+      }
+      console.log(item)
+      const menures = await axiossecuredata.post('/menu', item)
+      console.log(menures.data)
+      if (menures.data.insertedId) {
+        reset();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `${data.name} added on menu successfully`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    }
+    console.log(res.data)
+  }
   return (
     <div>
       <Sectiontitle subtitle={"---What's new?---"} title={"ADD AN ITEM"}></Sectiontitle>
@@ -65,7 +104,7 @@ const Additems = () => {
 
 
           {/* <input type="submit" /> */}
-          <button className='btn'>Add item <ImSpoonKnife />
+          <button className='btn bg-gradient-to-r from-slate-900 to-orange-300 text-white'>Add item <ImSpoonKnife />
           </button>
         </form>
       </div>

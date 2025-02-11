@@ -12,6 +12,7 @@ import Allusers from "../Pages/AllUsers/Allusers";
 import Adminroute from "../Pages/Adminroute/Adminroute";
 import Privateroute from "../Pages/Privateroute/Privateroute";
 import Additems from "../Pages/Additems/Additems";
+import Manageitems from "../Pages/Manageitems/Manageitems";
 
 const router = createBrowserRouter([
   {
@@ -41,19 +42,24 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path:'dashboard' ,
-    element:<Privateroute><Dashboard></Dashboard></Privateroute>,
-    children:[
+    path: 'dashboard',
+    element: <Privateroute><Dashboard></Dashboard></Privateroute>,
+    children: [
       {
-        path:'cart' ,
-        element:<Cart></Cart>
-      } , {
-        path:'manageusers',
-        element:<Adminroute><Allusers></Allusers></Adminroute>
-      } , 
+        path: 'cart',
+        element: <Cart></Cart>
+      }, {
+        path: 'manageusers',
+        element: <Adminroute><Allusers></Allusers></Adminroute>
+      },
       {
-        path:'additems',
-        element:<Adminroute><Additems></Additems></Adminroute>
+        path: 'additems',
+        element: <Adminroute><Additems></Additems></Adminroute>
+      },
+      {
+        path: 'manageitems',
+        element: <Adminroute><Manageitems></Manageitems></Adminroute>
+
       }
     ]
   }
