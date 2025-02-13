@@ -13,6 +13,7 @@ import Adminroute from "../Pages/Adminroute/Adminroute";
 import Privateroute from "../Pages/Privateroute/Privateroute";
 import Additems from "../Pages/Additems/Additems";
 import Manageitems from "../Pages/Manageitems/Manageitems";
+import Edititems from "../Pages/Edititems/Edititems";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
       {
         path: 'additems',
         element: <Adminroute><Additems></Additems></Adminroute>
+      },
+      {
+        path: 'edititems/:id',
+        element: <Adminroute><Edititems></Edititems></Adminroute>,
+        loader: ({ params }) => fetch(`http://localhost:7065/menu/${params.id}`)
       },
       {
         path: 'manageitems',
