@@ -14,6 +14,7 @@ import Privateroute from "../Pages/Privateroute/Privateroute";
 import Additems from "../Pages/Additems/Additems";
 import Manageitems from "../Pages/Manageitems/Manageitems";
 import Edititems from "../Pages/Edititems/Edititems";
+import Payment from "../Pages/Payment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
         path: 'manageitems',
         element: <Adminroute><Manageitems></Manageitems></Adminroute>
 
+      },
+      {
+        path: 'payment',
+        element: <Adminroute><Payment></Payment></Adminroute>
       }
     ]
   }
