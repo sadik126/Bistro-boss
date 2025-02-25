@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Pages/Authprovider/Authprovider";
 import {
   FaBowlFood,
@@ -11,39 +11,50 @@ import {
   FaHouse,
 } from "react-icons/fa6";
 import Usecart from "../../Pages/Usecart/Usecart";
+import Useadmin from "../../Pages/Useadmin/Useadmin";
+import Customlink from "../../Pages/Customlink/Customlink";
 
 const Navber = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [isAdmin] = Useadmin()
   const [cart] = Usecart()
   const navOptions = (
     <>
       <li>
-        <Link to="/">
+        <Customlink to="/">
           {" "}
           <FaHouse></FaHouse> Home
-        </Link>
+        </Customlink>
       </li>
 
       <li>
-        <Link to="/menu">
+        <Customlink to="/menu">
           {" "}
           <FaClipboardList /> Menu
-        </Link>
+        </Customlink>
       </li>
-      <li>
+      {
+        user && isAdmin && <li>
+          <Customlink to="/order/salad">
+            {" "}
+            <FaBowlFood /> Order food
+          </Customlink>
+        </li>
+      }
+      {/* <li>
         <Link to="/order/salad">
           {" "}
           <FaBowlFood /> Order food
         </Link>
-      </li>
+      </li> */}
       <li>
-        <Link to="/dashboard/cart">
+        <Customlink to="/dashboard/cart">
           {" "}
           <button>
             <FaCartShopping className="mr-2" />
             <div className="badge badge-secondary ">+{cart.length}</div>
           </button>
-        </Link>
+        </Customlink>
       </li>
       <li>
         {user ? (
@@ -54,10 +65,10 @@ const Navber = () => {
             <FaDoorClosed /> Logout
           </button>
         ) : (
-          <Link to="/login">
+          <Customlink to="/login">
             {" "}
             <FaDoorOpen /> Login
-          </Link>
+          </Customlink>
         )}
       </li>
       <li>
@@ -83,10 +94,10 @@ const Navber = () => {
   );
   return (
     <div>
-      <div className="navbar max-w-screen-xl fixed z-10 bg-opacity-30 bg-black text-white">
+      <div className="navbar max-w-screen-xl fixed z-10 bg-opacity-30 bg-black text-white ">
         <div className="navbar-start">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden text-black">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -104,7 +115,7 @@ const Navber = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 text-black rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               {navOptions}
             </ul>

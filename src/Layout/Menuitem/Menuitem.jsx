@@ -12,7 +12,7 @@ const Menuitem = ({ item }) => {
       />
       <div>
         <h3 className="uppercase">{name}---------</h3>
-        <p>{recipe}</p>
+        <p>{recipe?.substring(0, 50)}...</p>
       </div>
       <p className="text-yellow-500">${price}</p>
     </div>

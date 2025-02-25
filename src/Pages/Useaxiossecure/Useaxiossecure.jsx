@@ -7,21 +7,21 @@ export const axiosSecure = axios.create({
   baseURL: "http://localhost:7065",
 });
 const Useaxiossecure = () => {
-  const {logOut} = useContext(AuthContext)
+  const { logOut } = useContext(AuthContext)
   const navigate = useNavigate();
-  axiosSecure.interceptors.request.use(function(config){
+  axiosSecure.interceptors.request.use(function (config) {
     const token = localStorage.getItem('access-token');
     // console.log('request stopped by interceptors')
     config.headers.authorization = `Bearer ${token}`;
     return config;
-  } , function(error){
+  }, function (error) {
     return Promise.reject(error);
   })
 
-  axiosSecure.interceptors.response.use(function(response){
+  axiosSecure.interceptors.response.use(function (response) {
     // console.log('response stopped by interceptors')
     return response;
-  } , async(error)=> {
+  }, async (error) => {
     // console.log('status error in' , error)
     const status = error.response.status;
     // if(status === 401 ){
@@ -34,7 +34,7 @@ const Useaxiossecure = () => {
     if (status === 401 || status === 403) {
       await logOut();
       navigate("/login", { replace: true });
-    } 
+    }
     // else if (status === 403) {
     //   console.warn("Access denied: You do not have admin privileges");
     // }

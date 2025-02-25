@@ -12,13 +12,13 @@ import Usecart from "../Usecart/Usecart";
 const Foodcard = ({ item }) => {
   const { name, image, price, recipe, _id } = item;
   const { user } = useContext(AuthContext);
-  const [,refetch] = Usecart()
-  const [loading , setLoading] = useState(false)
+  const [, refetch] = Usecart()
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
   const location = useLocation();
   const axiosSecure = Useaxiossecure();
   const handlecart = (food) => {
-    setLoading(true)
+    // setLoading(true)
     if (user && user.email) {
       const cartItem = {
         menuId: _id,
@@ -27,18 +27,17 @@ const Foodcard = ({ item }) => {
         image: food.image,
         price: food.price,
       };
-      console.log(cartItem , food);
+      console.log(cartItem, food);
 
       axiosSecure.post("/carts", cartItem).then((res) => {
         console.log(res.data);
-        {res.data && setLoading(false)}
-        
-        if(res.data.insertedId){
+        // { res.data && setLoading(false) }
+
+        if (res.data.insertedId) {
           toast.custom((t) => (
             <div
-              className={`${
-                t.visible ? 'animate-enter' : 'animate-leave'
-              } max-w-md w-full bg-orange-300  shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+              className={`${t.visible ? 'animate-enter' : 'animate-leave'
+                } max-w-md w-full bg-orange-300  shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
             >
               <div className="flex-1 w-0 p-4">
                 <div className="flex items-start">
@@ -51,7 +50,7 @@ const Foodcard = ({ item }) => {
                   </div>
                   <div className="ml-3 flex-1">
                     <p className="text-sm font-medium text-gray-900">
-                     {name}
+                      {name}
                     </p>
                     <p className="mt-1 text-sm text-gray-500">
                       Added in your cart
@@ -72,10 +71,10 @@ const Foodcard = ({ item }) => {
         }
         refetch()
       })
-      .catch((error) => {
-        console.error("Error:", error.response?.data || error.message);
-        Swal.fire("Error", "Failed to add item to cart.", "error");
-      })
+        .catch((error) => {
+          console.error("Error:", error.response?.data || error.message);
+          Swal.fire("Error", "Failed to add item to cart.", "error");
+        })
 
       // fetch("http://localhost:7065/carts", {
       //   method: "POST",
@@ -102,9 +101,9 @@ const Foodcard = ({ item }) => {
       });
     }
   };
-  if(loading) {
-    return <Loading></Loading>
-  }
+  // if (loading) {
+  //   return <Loading></Loading>
+  // }
   return (
     <div className="card bg-base-100 w-96 shadow-xl">
       <figure className="px-10 pt-10">
@@ -118,7 +117,7 @@ const Foodcard = ({ item }) => {
         <p>{recipe}</p>
         <div className="card-actions">
           <button
-            onClick={()=>handlecart(item)}
+            onClick={() => handlecart(item)}
             className="btn btn-outline text-orange-400 border-0 border-b-4 my-4"
           >
             Add to cart

@@ -18,9 +18,9 @@ const Order = () => {
 
   const [tabIndex, setTabIndex] = useState(initialcategory);
 
-  if (loading) {
-    return <Loading></Loading>
-  }
+  // if (loading) {
+  //   return <Loading></Loading>
+  // }
 
   console.log(category);
   // const dessert = menu.filter((item) => {

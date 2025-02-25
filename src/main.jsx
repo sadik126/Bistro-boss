@@ -10,35 +10,47 @@ import { Toaster } from "react-hot-toast";
 import Loading from "./Pages/Loading/Loading.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // Background এ Refetch হবে না
+      retry: 1, // শুধুমাত্র একবার রিট্রাই করবে
+      staleTime: 5 * 60 * 1000, // 5 মিনিট পরে Data আবার fetch করবে ekhane cache theke data show korbe 
+    },
+  },
+})
 
 
 
 createRoot(document.getElementById("root")).render(
-  
+
   <StrictMode>
 
-<Authprovider>
+    <HelmetProvider>
 
-<QueryClientProvider client={queryClient}>
+      <Authprovider>
 
-<HelmetProvider>
-        <div className="max-w-screen-xl mx-auto">
-          <RouterProvider router={router}></RouterProvider>
-          <Toaster
-  position="top-center"
-  reverseOrder={false}
-/>
-        </div>
-      </HelmetProvider>
-</QueryClientProvider>
-     
-    </Authprovider>
+        <QueryClientProvider client={queryClient}>
 
 
-    
-       
-    
-   
+          <div className="max-w-screen-xl mx-auto">
+            <RouterProvider router={router} fallbackElement={<Loading />}></RouterProvider>
+            <Toaster
+              position="top-center"
+              reverseOrder={false}
+            />
+          </div>
+
+        </QueryClientProvider>
+
+      </Authprovider>
+
+    </HelmetProvider>
+
+
+
+
+
+
   </StrictMode>
 );

@@ -32,21 +32,21 @@ const Signup = () => {
             email: data.email
           }
           console.log("user updated");
-          allaxios.post('/users' , userinfo)
-          .then(res => {
-            if(res.data.insertedId){
-              reset();
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "User created successfully",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              navigate("/");
-            }
-          })
-        
+          allaxios.post('/users', userinfo)
+            .then(res => {
+              if (res.data.insertedId) {
+                reset();
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "User created successfully",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                navigate("/");
+              }
+            })
+
         })
         .catch((error) => console.log(error));
       // console.log(res.user);
@@ -58,12 +58,7 @@ const Signup = () => {
       <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center md:w-1/2 lg:text-left">
-            {/* <h1 className="text-5xl font-bold">Login now!</h1>
-              <p className="py-6">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-                excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-                et a id nisi.
-              </p> */}
+
             <img src={img} alt="" />
           </div>
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -83,7 +78,7 @@ const Signup = () => {
                       : "input input-bordered"
                   }
                   onKeyUp={() => trigger("name")}
-                  // onKeyUp={(e) => console.log("Typing:", e.target.value)}
+                // onKeyUp={(e) => console.log("Typing:", e.target.value)}
                 />
                 {errors.name && (
                   <span className="text-red-500">please enter your name</span>

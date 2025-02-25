@@ -15,6 +15,8 @@ import Additems from "../Pages/Additems/Additems";
 import Manageitems from "../Pages/Manageitems/Manageitems";
 import Edititems from "../Pages/Edititems/Edititems";
 import Payment from "../Pages/Payment/Payment";
+import Paymenthistory from "../Pages/Paymenthistory/Paymenthistory";
+import Adminhome from "../Pages/Adminhome/Adminhome";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/order/:category",
-        element: <Order></Order>,
+        element: <Privateroute><Order></Order></Privateroute>,
       },
       {
         path: "/login",
@@ -50,7 +52,12 @@ const router = createBrowserRouter([
       {
         path: 'cart',
         element: <Cart></Cart>
-      }, {
+      },
+      {
+        path: 'adminhome',
+        element: <Adminroute><Adminhome></Adminhome></Adminroute>
+      },
+      {
         path: 'manageusers',
         element: <Adminroute><Allusers></Allusers></Adminroute>
       },
@@ -69,8 +76,13 @@ const router = createBrowserRouter([
 
       },
       {
+        path: 'paymenthistory',
+        element: <Privateroute><Paymenthistory></Paymenthistory></Privateroute>
+
+      },
+      {
         path: 'payment',
-        element: <Adminroute><Payment></Payment></Adminroute>
+        element: <Privateroute><Payment></Payment></Privateroute>
       }
     ]
   }
