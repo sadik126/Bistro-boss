@@ -9,49 +9,78 @@ import axiosPublic from "../axiosPublic/axiosPublic";
 
 const Signup = () => {
   const allaxios = axiosPublic()
+
+
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    formState: { errors, isValid },
     trigger,
     reset,
-  } = useForm();
+  } = useForm({ mode: "onChange" });
 
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile, user } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    createUser(data.email, data.password).then((res) => {
-      updateUserProfile(data.name)
-        .then(() => {
-          const userinfo = {
-            name: data.name,
-            email: data.email
-          }
-          console.log("user updated");
-          allaxios.post('/users', userinfo)
-            .then(res => {
-              if (res.data.insertedId) {
-                reset();
-                Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "User created successfully",
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-                navigate("/");
-              }
-            })
+  const imagehostkey = 'e0e49e32b3b219f54116af3c0da0de50';
+  const imageurl = `https://api.imgbb.com/1/upload?&key=${imagehostkey}`;
 
-        })
-        .catch((error) => console.log(error));
-      // console.log(res.user);
-    });
-  };
+  const onSubmit = async (data) => {
+
+    try {
+      const formData = new FormData();
+      formData.append("image", data.image[0]);
+
+      const res = await allaxios.post(imageurl, formData, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+
+      if (!res.data.success) throw new Error("Image upload failed");
+
+      const image = res.data.data.display_url;
+
+      const userCredential = await createUser(data.email, data.password);
+      await updateUserProfile(data.name, image);
+
+      const useritem = { name: data.name, email: data.email, image: image };
+      const response = await allaxios.post("/users", useritem);
+
+      if (response.data.insertedId) {
+        reset();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "User created successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        Swal.fire({
+          icon: "error",
+          title: "User Already Exists",
+          text: "This email is already registered. Please log in.",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: `Something went wrong: ${error.message}`,
+        });
+      }
+    }
+  }
+
+
+  //     .catch((error) => {
+
+  //     });
+  // }
+
+  // };
   return (
     <div>
       {" "}
@@ -111,6 +140,36 @@ const Signup = () => {
                 {errors.email?.pattern === "pattern" && (
                   <span className="text-red-500">
                     please check your email properly
+                  </span>
+                )}
+              </div>
+              <div className="">
+                <label className="label">
+                  <span className="label-text">Image</span>
+                </label>
+                <input
+                  type="file"
+                  placeholder="image"
+                  {...register("image", {
+                    required: true,
+
+                  })}
+                  name="image"
+                  accept="image/*"
+                  className={
+                    errors.image
+                      ? "input input-bordered input-error"
+                      : ""
+                  }
+
+                />
+                {errors.image?.type === "required" && (
+                  <span className="text-red-500">please upload a image</span>
+                )}
+
+                {errors.image?.pattern === "pattern" && (
+                  <span className="text-red-500">
+                    please check your photo properly
                   </span>
                 )}
               </div>
