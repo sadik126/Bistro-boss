@@ -16,9 +16,10 @@ import axiosPublic from "../axiosPublic/axiosPublic";
 const Login = () => {
   const captcharef = useRef(null);
   const [disabled, setDisabled] = useState(true);
-  const {googleSignin} = useContext(AuthContext);
+  const { googleSignin, updateUserProfile, user } = useContext(AuthContext);
   const axiospublic = axiosPublic();
-  
+  const [captchaError, setCaptchaError] = useState("");
+
 
 
   const { signIn } = useContext(AuthContext);
@@ -29,37 +30,50 @@ const Login = () => {
     loadCaptchaEnginge(4);
   }, []);
 
-  const handleGoogleSignIn = () => {
-    googleSignin()
-    .then(result => {
-      console.log(result.user);
-      const userInfo = {
-        email:result.user?.email,
-        name:result.user?.displayName
-      }
-      axiospublic.post('/users' , userInfo)
-      .then(res => {
-        console.log(res.data)
-        // Swal.fire({
-        //   title: "User login successfully",
-        //   showClass: {
-        //     popup: `
-        //       animate__animated
-        //       animate__fadeInUp
-        //       animate__faster
-        //     `,
-        //   },
-        //   hideClass: {
-        //     popup: `
-        //       animate__animated
-        //       animate__fadeOutDown
-        //       animate__faster
-        //     `,
-        //   },
-        // });
-        navigate("/");
+  const handleGoogleSignIn = async () => {
+    await googleSignin()
+      .then(async result => {
+        console.log(result.user);
+        const userInfo = {
+          email: result.user?.email,
+          name: result.user?.displayName,
+          image: result.user?.photoURL
+        }
+
+        await updateUserProfile(result.user?.displayName, result.user?.photoURL)
+        await axiospublic.post('/users', userInfo)
+          .then(res => {
+            console.log(res.data)
+            Swal.fire({
+              title: "User login successfully",
+              showClass: {
+                popup: `
+                  animate__animated
+                  animate__fadeInUp
+                  animate__faster
+                `,
+              },
+              hideClass: {
+                popup: `
+                  animate__animated
+                  animate__fadeOutDown
+                  animate__faster
+                `,
+              },
+            });
+            navigate(from, { replace: true });
+
+            navigate("/");
+          })
+          .catch((error) => {
+            console.error("Error saving user:", error);
+            Swal.fire("Error!", "Something went wrong while saving user data.", "error");
+          })
       })
-    })
+      .catch((error) => {
+        console.error("Google Sign-In Error:", error);
+        Swal.fire("Error!", "Google Sign-In failed. Please try again.", "error");
+      })
   }
 
   const handleLogin = (e) => {
@@ -69,28 +83,33 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    signIn(email, password).then((res) => {
-      const user = res.user;
-      console.log(user);
-      Swal.fire({
-        title: "User login successfully",
-        showClass: {
-          popup: `
+    signIn(email, password)
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+        Swal.fire({
+          title: "User login successfully",
+          showClass: {
+            popup: `
             animate__animated
             animate__fadeInUp
             animate__faster
           `,
-        },
-        hideClass: {
-          popup: `
+          },
+          hideClass: {
+            popup: `
             animate__animated
             animate__fadeOutDown
             animate__faster
           `,
-        },
+          },
+        });
+        navigate(from, { replace: true });
+      })
+      .catch(error => {
+        console.error("Login Error:", error);
+        Swal.fire("Login Failed!", "Invalid email or password. Try again.", "error");
       });
-      navigate(from, { replace: true });
-    });
 
     console.log("clicked", email, password);
   };
@@ -100,8 +119,10 @@ const Login = () => {
 
     if (validateCaptcha(captchavalue)) {
       setDisabled(false);
+      setCaptchaError("");
     } else {
       setDisabled(true);
+      setCaptchaError("Incorrect captcha. Please try again.");
     }
   };
   return (
@@ -162,6 +183,7 @@ const Login = () => {
                   required
                 />
               </div>
+              {captchaError && <p className="text-red-500">{captchaError}</p>}
               <div className="form-control mt-6">
                 <input
                   className="btn bg-orange-500"
@@ -178,11 +200,11 @@ const Login = () => {
                 </Link>
               </p>
               <div className="divider">OR Sign In With</div>
-             
+
               <button onClick={handleGoogleSignIn} className="btn bg-orange-300">
-            
-              <FcGoogle />
-              Button
+
+                <FcGoogle />
+                Button
               </button>
             </form>
           </div>

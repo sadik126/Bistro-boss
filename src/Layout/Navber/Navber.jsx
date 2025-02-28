@@ -34,7 +34,7 @@ const Navber = () => {
         </Customlink>
       </li>
       {
-        user && isAdmin && <li>
+        user && <li>
           <Customlink to="/order/salad">
             {" "}
             <FaBowlFood /> Order food

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import img from "../../assets/others/authentication2.png";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../Authprovider/Authprovider";
@@ -9,6 +9,7 @@ import axiosPublic from "../axiosPublic/axiosPublic";
 
 const Signup = () => {
   const allaxios = axiosPublic()
+  const [loading, setLoading] = useState(false);
 
 
   const {
@@ -27,6 +28,8 @@ const Signup = () => {
   const imageurl = `https://api.imgbb.com/1/upload?&key=${imagehostkey}`;
 
   const onSubmit = async (data) => {
+
+    setLoading(true)
 
     try {
       const formData = new FormData();
@@ -71,6 +74,9 @@ const Signup = () => {
           text: `Something went wrong: ${error.message}`,
         });
       }
+    }
+    finally {
+      setLoading(false)
     }
   }
 
@@ -219,7 +225,7 @@ const Signup = () => {
                 <input
                   className="btn bg-orange-500"
                   type="submit"
-                  value="Sign up"
+                  value={loading ? `Signing up...` : ` Sign up`}
                 />
               </div>
             </form>
