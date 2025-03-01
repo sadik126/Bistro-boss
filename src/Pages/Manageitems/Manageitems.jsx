@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Sectiontitle from '../../Layout/Sectiontitle/Sectiontitle';
 import useMenu from '../useMenu/useMenu';
 import { FaRegEdit } from 'react-icons/fa';
@@ -6,17 +6,51 @@ import { MdDelete } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import Useaxiossecure, { axiosSecure } from '../Useaxiossecure/Useaxiossecure';
 import axiosPublic from '../axiosPublic/axiosPublic';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 const Manageitems = () => {
-    const [menu, loading, refetch] = useMenu();
+
+    const [currentpage, setCurrentpage] = useState(0)
     const axiosSecure = Useaxiossecure()
 
-    // const allaxios = axiosPublic()
 
-    const handleedit = (item) => {
-        console.log(item)
-    }
+
+
+    const { data: alldata = [], refetch: datafetch } = useQuery({
+        queryKey: ['allstats'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/payment-stats')
+            console.log(res.data.menuItems)
+            return res.data.menuItems;
+        }
+    })
+
+    const itemperPage = 6;
+    const numberofpage = Math.ceil(alldata / itemperPage)
+
+    const pages = [...Array(numberofpage).keys()]
+
+
+    const { data: menu = [], refetch } = useQuery({
+        queryKey: ['menu'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/allmenu?page=${currentpage}&size=${itemperPage}`)
+
+            return res.data;
+        }
+    })
+
+
+    useEffect(() => {
+        refetch()
+    }, [currentpage])
+
+
+
+
+
+
 
     const handledelete = (item) => {
         console.log(item._id)
@@ -50,8 +84,8 @@ const Manageitems = () => {
             <>
                 <div className="overflow-x-auto h-screen p-5">
                     <table className="table w-full">
-                        {/* head */}
-                        <thead className='bg-orange-400'>
+
+                        <thead className='bg-gray-800 text-white'>
                             <tr>
                                 <th></th>
                                 <th>Image</th>
@@ -62,11 +96,11 @@ const Manageitems = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* row 1 */}
+
                             {
                                 menu.map((m, index) =>
                                     <tr key={m._id} className="bg-base-200">
-                                        <th>{index + 1}</th>
+                                        <th>{index + 1 + (currentpage * itemperPage)}</th>
                                         <td> <div className="avatar">
                                             <div className="mask mask-squircle h-12 w-12">
                                                 <img
@@ -87,6 +121,22 @@ const Manageitems = () => {
 
                         </tbody>
                     </table>
+
+                </div>
+
+                <div className="join flex justify-center p-10">
+
+                    {
+                        pages.map(p => <input
+                            onClick={() => setCurrentpage(p)}
+                            key={p}
+                            className="join-item btn btn-square"
+                            type="radio"
+                            name="options"
+                            aria-label={p + 1}
+                            checked={currentpage === p && 'checked'} />)
+                    }
+
                 </div>
 
             </>

@@ -46,7 +46,7 @@ const Signup = () => {
       const userCredential = await createUser(data.email, data.password);
       await updateUserProfile(data.name, image);
 
-      const useritem = { name: data.name, email: data.email, image: image };
+      const useritem = { name: data.name, email: data.email, image: image, role: 'Member' };
       const response = await allaxios.post("/users", useritem);
 
       if (response.data.insertedId) {

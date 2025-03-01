@@ -37,11 +37,11 @@ const Dashboard = () => {
                             <li><NavLink to="/dashboard/managebookings"> <FaBook /> Manage Bookings</NavLink></li>
                             <li><NavLink to="/dashboard/manageusers"> <FaUsers /> Manage Users</NavLink></li></>
                             : <>
-                                <li><NavLink to="/dashboard/home"> <FaHouseUser />UserHome</NavLink></li>
-                                <li><NavLink to="/dashboard/cart"> <FaCartPlus /> My cart</NavLink></li>
+                                <li><NavLink to="/dashboard/userhome"> <FaHouseUser />UserHome</NavLink></li>
+
                                 <li><NavLink to="/dashboard/paymenthistory"> <FaAmazonPay /> Payment History</NavLink></li>
                                 <li><NavLink to="/dashboard/addreview"> <FaComment /> Add review</NavLink></li>
-                                <li><NavLink to="/dashboard/mybooking"> <FaCalendarCheck /> My booking</NavLink></li></>
+                            </>
                     }
 
 
@@ -50,6 +50,8 @@ const Dashboard = () => {
                     <li><NavLink to="/"> <FaHouseUser />Home</NavLink></li>
                     <li><NavLink to="/dashboard/menu"> <FaSearchengin />Menu</NavLink></li>
                     <li><NavLink to="/dashboard/contact"> <IoIosContacts />Contact</NavLink></li>
+                    <li><NavLink to="/dashboard/mybooking"> <FaCalendarCheck /> My booking</NavLink></li>
+                    <li><NavLink to="/dashboard/cart"> <FaCartPlus /> My cart</NavLink></li>
 
 
 

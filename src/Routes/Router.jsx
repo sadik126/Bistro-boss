@@ -17,6 +17,9 @@ import Edititems from "../Pages/Edititems/Edititems";
 import Payment from "../Pages/Payment/Payment";
 import Paymenthistory from "../Pages/Paymenthistory/Paymenthistory";
 import Adminhome from "../Pages/Adminhome/Adminhome";
+import Allbookings from "../Pages/Allbookings/Allbookings";
+import Mybooking from "../Pages/Mybooking/Mybooking";
+import UserHome from "../Pages/UserHome/UserHome";
 
 const router = createBrowserRouter([
   {
@@ -58,8 +61,20 @@ const router = createBrowserRouter([
         element: <Adminroute><Adminhome></Adminhome></Adminroute>
       },
       {
+        path: 'userhome',
+        element: <UserHome></UserHome>
+      },
+      {
         path: 'manageusers',
         element: <Adminroute><Allusers></Allusers></Adminroute>
+      },
+      {
+        path: 'managebookings',
+        element: <Adminroute><Allbookings></Allbookings></Adminroute>
+      },
+      {
+        path: 'mybooking',
+        element: <Privateroute> <Mybooking></Mybooking></Privateroute>
       },
       {
         path: 'additems',
@@ -73,6 +88,7 @@ const router = createBrowserRouter([
       {
         path: 'manageitems',
         element: <Adminroute><Manageitems></Manageitems></Adminroute>
+
 
       },
       {
