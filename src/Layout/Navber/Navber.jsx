@@ -20,12 +20,20 @@ const Navber = () => {
   const [imageSrc, setImageSrc] = useState("");
   const [isAdmin] = Useadmin()
   const [isOpen, setIsOpen] = useState(false);
-  useEffect(async () => {
-    if (user?.photoURL) {
-      await fetch(user.photoURL, { mode: "no-cors" })
-        .then(() => setImageSrc(user.photoURL))
-        .catch((err) => console.log("Image fetch failed", err));
-    }
+  useEffect(() => {
+    const fetchImage = async () => {
+      if (user?.photoURL) {
+        try {
+          await fetch(user.photoURL, { mode: "no-cors" });
+          setImageSrc(user.photoURL);
+        } catch (err) {
+          console.log("Image fetch failed", err);
+        }
+      }
+    };
+
+    fetchImage(); // ✅ Async ফাংশনকে কল করা হলো
+
   }, [user]);
   const [cart] = Usecart()
   const toggleMenu = () => {

@@ -67,7 +67,7 @@ const Dashboard = () => {
                     <div className="divider divider-neutral"></div>
 
                     <li><NavLink to="/"><FaHouseUser /> Home</NavLink></li>
-                    <li><NavLink to="/dashboard/menu"><FaSearchengin /> Menu</NavLink></li>
+                    <li><NavLink to="/menu"><FaSearchengin /> Menu</NavLink></li>
                     <li><NavLink to="/dashboard/contact"><IoIosContacts /> Contact</NavLink></li>
                     <li><NavLink to="/dashboard/cart"><FaCartPlus /> My Cart</NavLink></li>
                 </ul>
