@@ -82,63 +82,65 @@ const Manageitems = () => {
         <>
             <Sectiontitle title={"MANAGE ALL ITEMS"} subtitle={"---Hurry Up!---"}></Sectiontitle>
             <>
-                <div className="overflow-x-auto h-screen p-5">
-                    <table className="table w-full">
-
-                        <thead className='bg-gray-800 text-white'>
-                            <tr>
-                                <th></th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            {
-                                menu.map((m, index) =>
-                                    <tr key={m._id} className="bg-base-200">
+                <div className="overflow-x-auto sm:overflow-x-hidden  p-5">
+                    <div className="w-full overflow-auto">
+                        <table className="table min-w-full border-collapse border border-gray-300">
+                            <thead className='bg-gray-800 text-white'>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {menu.map((m, index) => (
+                                    <tr key={m._id} className="bg-base-200 border-b border-gray-300">
                                         <th>{index + 1 + (currentpage * itemperPage)}</th>
-                                        <td> <div className="avatar">
-                                            <div className="mask mask-squircle h-12 w-12">
-                                                <img
-                                                    src={m.image}
-                                                    alt="Avatar Tailwind CSS Component" />
+                                        <td>
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle h-12 w-12">
+                                                    <img src={m.image} alt={m.name} />
+                                                </div>
                                             </div>
-                                        </div></td>
-                                        <td>{m.name}</td>
-                                        <td>{m.price}</td>
+                                        </td>
+                                        <td className="whitespace-nowrap">{m.name}</td>
+                                        <td className="whitespace-nowrap">{m.price}</td>
                                         <td>
                                             <Link to={`/dashboard/edititems/${m._id}`}>
-                                                <button className="btn bg-yellow-700 text-white btn-md"> <FaRegEdit />Edit</button></Link>
+                                                <button className="btn bg-yellow-700 text-white w-[95px] flex items-center">
+                                                    <FaRegEdit className="mr-1" /> Edit
+                                                </button>
+                                            </Link>
                                         </td>
-                                        <td><button onClick={() => handledelete(m)} className="btn bg-red-700 text-white btn-md"> <MdDelete /> Delete</button></td>
-                                    </tr>)
-                            }
-
-
-                        </tbody>
-                    </table>
-
+                                        <td>
+                                            <button onClick={() => handledelete(m)} className="btn bg-red-700 text-white w-[105px] flex items-center">
+                                                <MdDelete className="mr-1" /> Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-                <div className="join flex justify-center p-10">
-
-                    {
-                        pages.map(p => <input
-                            onClick={() => setCurrentpage(p)}
+                {/* Pagination */}
+                <div className="flex justify-center p-5 flex-wrap gap-2">
+                    {pages.map(p => (
+                        <input
                             key={p}
-                            className="join-item btn btn-square"
+                            onClick={() => setCurrentpage(p)}
+                            className="join-item btn btn-square text-sm sm:text-base"
                             type="radio"
                             name="options"
                             aria-label={p + 1}
-                            checked={currentpage === p && 'checked'} />)
-                    }
-
+                            checked={currentpage === p && "checked"}
+                        />
+                    ))}
                 </div>
-
             </>
         </ >
     );

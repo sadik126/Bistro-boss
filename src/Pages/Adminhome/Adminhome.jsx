@@ -42,37 +42,31 @@ const Adminhome = () => {
 
     const COLORS = ["#4285F4", "#EA4335", "#FB8C00", "#34A853", "#9C27B0"];
     return (
-        <div className='h-screen'>
+        <div className='min-h-screen p-5 bg-gray-100'>
+            <h2 className='text-3xl font-bold text-center mb-6'>Hi, Welcome {user.displayName}</h2>
 
-            <h2 className='text-3xl font-bold p-5'>Hi , Welcome {user.displayName}</h2>
-
-            <div className="grid  grid-cols-4 justify-center gap-16 p-4">
-                {/* <h2 className='text-3xl'> <span>Hi , welcome</span></h2>
-            {
-                user.displayName ? user.displayName : 'back'
-            } */}
-
+            {/* Stats Section */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center">
                 {statsadmin.map((stat, index) => (
                     <div
                         key={index}
-                        className={`flex items-center p-6 w-64 rounded-2xl shadow-lg text-white bg-gradient-to-r ${stat.color}`}
+                        className={`flex items-center p-6 w-full sm:w-64 rounded-2xl shadow-lg text-white bg-gradient-to-r ${stat.color}`}
                     >
-                        <div className="mr-4">{stat.icon}</div>
+                        <div className="mr-4 text-3xl">{stat.icon}</div>
                         <div>
                             <p className="text-2xl font-bold">{stat.value}</p>
                             <p className="text-sm">{stat.label}</p>
                         </div>
                     </div>
                 ))}
-
             </div>
 
-            <div className="flex flex-col md:flex-row justify-center items-center gap-10 p-5">
-
+            {/* Charts Section */}
+            <div className="flex flex-col lg:flex-row justify-center items-center gap-10 mt-10">
                 {/* Bar Chart */}
-                <div className="bg-white shadow-lg rounded-xl p-5">
+                <div className="bg-white shadow-lg rounded-xl p-5 w-full sm:w-96">
                     <h2 className="text-xl font-semibold mb-3 text-center">Quantity Sold</h2>
-                    <BarChart width={400} height={300} data={chartData}>
+                    <BarChart width={350} height={300} data={chartData} className="mx-auto">
                         <XAxis dataKey="_id" />
                         <YAxis />
                         <Tooltip />
@@ -85,9 +79,10 @@ const Adminhome = () => {
                     </BarChart>
                 </div>
 
-                <div className="bg-white shadow-lg rounded-xl p-5">
+                {/* Pie Chart */}
+                <div className="bg-white shadow-lg rounded-xl p-5 w-full sm:w-80">
                     <h2 className="text-xl font-semibold mb-3 text-center">Revenue Distribution</h2>
-                    <PieChart width={300} height={300}>
+                    <PieChart width={300} height={300} className="mx-auto">
                         <Pie
                             data={chartData}
                             cx="50%"
@@ -103,9 +98,7 @@ const Adminhome = () => {
                         </Pie>
                     </PieChart>
                 </div>
-
             </div>
-
         </div>
 
     );

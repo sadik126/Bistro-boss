@@ -48,22 +48,33 @@ const Cart = () => {
 
   return (
     <>
-      <div className='flex justify-evenly'>
-        <h2 className='text-4xl  font-extrabold'>Items: {cart.length > 0 ? cart.length : 'Sorry you dont have any item right now'}</h2>
-        <h2 className='text-4xl font-extrabold'>Total price: $ <span className='text-orange-500'>{totalprice}</span>  </h2>
-        {
-          cart.length === 0 ? <Link to='/dashboard/payment'><button disabled className=" btn bg-orange-500 border-black hover:bg-slate-50 border-black">Pay</button></Link> : <Link to='/dashboard/payment'><button className=" btn bg-orange-500 border-black hover:bg-slate-50 border-black">Pay</button></Link>
-        }
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-10 p-4">
+        <h2 className="text-xl md:text-3xl font-extrabold text-center">
+          Items: {cart.length > 0 ? cart.length : "Sorry, you don't have any item right now"}
+        </h2>
 
-        {/* <button className=" btn bg-orange-500 border-black hover:bg-slate-50 border-black">Pay</button> */}
+        <h2 className="text-xl md:text-3xl font-extrabold text-center">
+          Total price: $ <span className="text-orange-500">{totalprice}</span>
+        </h2>
 
-
+        {/* Payment Button */}
+        <Link to="/dashboard/payment">
+          <button
+            disabled={cart.length === 0}
+            className={`btn px-6 py-2 text-white border-black transition-all ${cart.length === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600"
+              }`}
+          >
+            Pay
+          </button>
+        </Link>
       </div>
 
-      <div className="overflow-x-auto px-10">
-        <table className="table uppercase">
-          {/* head */}
-          <thead className='bg-orange-500 text-white'>
+      {/* Table Responsive Container */}
+      <div className="overflow-x-auto px-4 sm:px-10">
+        <table className="table w-full text-sm md:text-base uppercase">
+          {/* Table Head */}
+          <thead className="bg-orange-500 text-white">
             <tr>
               <th></th>
               <th>Image</th>
@@ -72,26 +83,38 @@ const Cart = () => {
               <th>Action</th>
             </tr>
           </thead>
+          {/* Table Body */}
           <tbody>
-            {/* row 1 */}
-            {
-              cart.length === 0 ? 'sorry you dont have any product right now' :
-                cart.map((item, index) => <tr key={item._id} className="bg-base-200">
+            {cart.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="text-center text-lg py-4">
+                  Sorry, you don't have any product right now.
+                </td>
+              </tr>
+            ) : (
+              cart.map((item, index) => (
+                <tr key={item._id} className="bg-base-200">
                   <th>{index + 1}</th>
-                  <td> <div className="avatar">
-                    <div className="mask mask-squircle h-12 w-12">
-                      <img
-                        src={item?.image}
-                        alt="Avatar Tailwind CSS Component" />
+                  <td>
+                    <div className="avatar">
+                      <div className="mask mask-squircle h-12 w-12">
+                        <img src={item?.image} alt="Product" />
+                      </div>
                     </div>
-                  </div></td>
+                  </td>
                   <td>{item?.name}</td>
-                  <td>{item?.price}</td>
-                  <td> <button onClick={() => handleDelete(item._id)} className="btn bg-red-700 text-white btn-xs"><FaTrashCan width={'200px'} /></button></td>
-                </tr>)
-            }
-
-
+                  <td>${item?.price}</td>
+                  <td>
+                    <button
+                      onClick={() => handleDelete(item._id)}
+                      className="btn bg-red-700 text-white btn-xs"
+                    >
+                      <FaTrashCan width={"200px"} />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

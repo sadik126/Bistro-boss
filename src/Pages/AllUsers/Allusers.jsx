@@ -68,15 +68,14 @@ const Allusers = () => {
     });
   }
   return (
-    <div>
-      <div className='flex justify-evenly my-4'>
+    <div className="px-4 py-6">
+      <div className='flex justify-between items-center my-4'>
         <h2 className='text-3xl'>All Users</h2>
-        <h2 className='text-3xl'>Total Users : {users.length}</h2>
-
+        <h2 className='text-xl md:text-3xl'>Total Users: {users.length}</h2>
       </div>
 
       <div className="overflow-x-auto h-screen p-5">
-        <table className="w-full border border-gray-300 shadow-lg rounded-lg overflow-hidden">
+        <table className="min-w-full border border-gray-300 shadow-lg rounded-lg overflow-hidden">
           <thead className="bg-gray-800 text-white">
             <tr>
               <th className="py-3 px-6">#</th>
@@ -98,16 +97,19 @@ const Allusers = () => {
                     {user.role}
                   </span>
                 </td>
-                <td className="py-3 px-6 text-center flex">
-                  {user.role === 'Admin' ?
-                    <span></span> : user.role === 'Moderator' ?
-                      <span></span> :
-                      <select className="select select-ghost w-full max-w-xs ml-2" onChange={(e) => setRole(e.target.value)}>
-                        <option disabled selected>Choose your role</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Moderator">Moderator</option>
-                        <option value="Member">Member</option>
-                      </select>}
+                <td className="py-3 px-6 text-center flex flex-wrap justify-center gap-2">
+                  {user.role === 'Admin' ? (
+                    <span></span>
+                  ) : user.role === 'Moderator' ? (
+                    <span></span>
+                  ) : (
+                    <select className="select select-ghost w-full max-w-xs ml-2" onChange={(e) => setRole(e.target.value)}>
+                      <option disabled selected>Choose your role</option>
+                      <option value="Admin">Admin</option>
+                      <option value="Moderator">Moderator</option>
+                      <option value="Member">Member</option>
+                    </select>
+                  )}
                   {user.role === 'Member' && (
                     <button onClick={() => handleadmin(user)} className="btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">
                       Confirm
@@ -115,67 +117,16 @@ const Allusers = () => {
                   )}
                 </td>
                 <td className="py-3 px-6 text-center">
-                  {
-                    user.role !== 'Admin' && <button onClick={() => handleDelete(user._id)} className="btn bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
+                  {user.role !== 'Admin' && (
+                    <button onClick={() => handleDelete(user._id)} className="btn bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
                       <FaTrashCan />
                     </button>
-                  }
-
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        {/* <table className="table w-full ">
-        
-          <thead className='bg-orange-400'>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-        
-            {
-              // users.map((user, index) => <tr className="bg-base-200" key={user._id}>
-              //   <th>{index + 1}</th>
-              //   <td>{user.name}</td>
-              //   <td>{user.email}</td>
-              //   <td className='flex'>
-              //     {
-              //       user.role === 'Admin' ? <span className='bg-red-700 text-white p-3 rounded-md'>Admin</span> :
-              //         user.role === 'Moderator' ? <span className='bg-blue-700 text-white p-3 rounded-md'>Moderator</span> :
-              //           <span className='bg-green-700 text-white p-3 rounded-md'>Member</span>
-              //     }
-              //     {user.role === 'Admin' ?
-              //       <span></span> : user.role === 'Moderator' ?
-              //         <span></span> :
-              //         <select className="select select-ghost w-full max-w-xs ml-2" onChange={(e) => setRole(e.target.value)}>
-              //           <option disabled selected>Choose your role</option>
-              //           <option value="Admin">Admin</option>
-              //           <option value="Moderator">Moderator</option>
-              //           <option value="Member">Member</option>
-              //         </select>}
-              //     <td>
-              //       {user.role === 'Admin' ?
-              //         <span></span> : user.role === 'Moderator' ?
-              //           <span></span> : <button onClick={() => handleadmin(user)} className="btn bg-red-700 text-white btn-xs">Confirm</button>
-              //       }
-
-                  
-
-              //     </td>
-              //   </td>
-              //   <td><button onClick={() => handleDelete(user._id)} className="btn bg-red-700 text-white btn-md"><FaTrashCan width={'200px'} /></button></td>
-              // </tr>)
-            }
-
-
-          </tbody>
-        </table> */}
       </div>
     </div>
   );

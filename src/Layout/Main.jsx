@@ -7,14 +7,14 @@ import Loading from "../Pages/Loading/Loading";
 const Main = () => {
   const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  // Simulate a delay (e.g., fetching data, loading assets)
-  const timer = setTimeout(() => {
-    setLoading(false);
-  }, 3000); // Adjust time as needed
+  useEffect(() => {
+    // Simulate a delay (e.g., fetching data, loading assets)
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000); // Adjust time as needed
 
-  return () => clearTimeout(timer);
-}, []);
+    return () => clearTimeout(timer);
+  }, []);
   const location = useLocation();
   const noheader =
     location.pathname.includes("login") || location.pathname.includes("signup");
@@ -25,11 +25,15 @@ useEffect(() => {
       {
         loading ? <Loading></Loading> : <>  {noheader || <Navber></Navber>}
 
-        <Outlet></Outlet>
-  
-        {noheader || <Footer></Footer>}</>
+          <div className="max-w-screen-xl mx-auto">
+            <Outlet ></Outlet>
+          </div>
+
+
+
+          {noheader || <Footer></Footer>}</>
       }
-    
+
     </div>
   );
 };

@@ -11,12 +11,14 @@ import "swiper/css/navigation";
 
 import { Navigation } from "swiper/modules";
 import { useState } from "react";
+import axiosPublic from "../axiosPublic/axiosPublic";
 
 const Testimonial = () => {
   const [reviews, setReviews] = useState([]);
+  // const allaxiospublic = axiosPublic()
 
   useEffect(() => {
-    fetch("reviews.json")
+    fetch('http://localhost:7065/review')
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);
@@ -27,25 +29,27 @@ const Testimonial = () => {
         subtitle={"---What Our Clients Say---"}
       ></Sectiontitle>
       <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-        {reviews.map((review) => (
-          <SwiperSlide key={review._id}>
-            <div className="mx-24 flex flex-col items-center justify-center my-16">
-              <Rating
-                style={{ maxWidth: 180 }}
-                value={review.rating}
-                readOnly
-              />
-              <div>
-                <FaQuoteRight size={150} />
-              </div>
+        {[...reviews] // নতুন অ্যারে বানাচ্ছি, যাতে সরাসরি sort করা যায়
+          .sort((a, b) => b._id.localeCompare(a._id)) // ID অনুসারে সর্বশেষ রিভিউগুলো আনছি
+          .slice(0, 5).map((review) => (
+            <SwiperSlide key={review._id}>
+              <div className="mx-24 flex flex-col items-center justify-center my-16">
+                <Rating
+                  style={{ maxWidth: 180 }}
+                  value={review.rating}
+                  readOnly
+                />
+                <div>
+                  <FaQuoteRight size={150} />
+                </div>
 
-              <p className="my-10">{review.details}</p>
-              <h3 className="text-4xl text-orange-400 text-center">
-                {review.name}
-              </h3>
-            </div>
-          </SwiperSlide>
-        ))}
+                <p className="my-10">{review.details}</p>
+                <h3 className="text-4xl text-orange-400 text-center">
+                  {review.name}
+                </h3>
+              </div>
+            </SwiperSlide>
+          ))}
       </Swiper>
     </section>
   );

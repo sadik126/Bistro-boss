@@ -33,7 +33,7 @@ createRoot(document.getElementById("root")).render(
         <QueryClientProvider client={queryClient}>
 
 
-          <div className="max-w-screen-xl mx-auto">
+          <div >
             <RouterProvider router={router} fallbackElement={<Loading />}></RouterProvider>
             <Toaster
               position="top-center"

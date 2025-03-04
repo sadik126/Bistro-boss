@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Pages/Authprovider/Authprovider";
 import {
@@ -13,11 +13,24 @@ import {
 import Usecart from "../../Pages/Usecart/Usecart";
 import Useadmin from "../../Pages/Useadmin/Useadmin";
 import Customlink from "../../Pages/Customlink/Customlink";
+import { IoFastFood } from "react-icons/io5";
 
 const Navber = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [imageSrc, setImageSrc] = useState("");
   const [isAdmin] = Useadmin()
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(async () => {
+    if (user?.photoURL) {
+      await fetch(user.photoURL, { mode: "no-cors" })
+        .then(() => setImageSrc(user.photoURL))
+        .catch((err) => console.log("Image fetch failed", err));
+    }
+  }, [user]);
   const [cart] = Usecart()
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
   const navOptions = (
     <>
       <li>
@@ -77,7 +90,7 @@ const Navber = () => {
             <div className="w-8 rounded-full">
               {user?.photoURL !== null ? (
                 <>
-                  <img src={user?.photoURL} alt="" />
+                  <img src={imageSrc} alt="User Profile" className="w-10 h-10 rounded-full object-cover" />
                 </>
               ) : (
                 <>
@@ -93,43 +106,90 @@ const Navber = () => {
     </>
   );
   return (
-    <div>
-      <div className="navbar max-w-screen-xl fixed z-10 bg-opacity-30 bg-black text-white ">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden text-black">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 text-black rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              {navOptions}
-            </ul>
+    <nav className="fixed top-0 left-0 w-full bg-black/40 backdrop-blur-md text-white z-50 shadow-lg">
+      <div className="max-w-7xl mx-auto px-5 flex items-center justify-between py-3">
+
+        {/* Logo */}
+        <Link to="/" className="text-2xl font-bold tracking-widest flex">
+          <IoFastFood />
+          <span className="text-orange-700 ml-3">BISTRO </span> BOSS
+        </Link>
+
+        {/* Desktop Menu */}
+        <ul className="hidden lg:flex space-x-6 text-lg">
+          <Customlink to="/">
+            <FaHouse /> Home
+          </Customlink>
+          <Customlink to="/menu">
+            <FaClipboardList /> Menu
+          </Customlink>
+          {user && (
+            <Customlink to="/order/salad">
+              <FaBowlFood /> Order Food
+            </Customlink>
+          )}
+          <Customlink to="/dashboard/cart">
+            <FaCartShopping />
+            <span className="ml-2 badge badge-secondary">{cart.length}</span>
+          </Customlink>
+          {user ? (
+            <button onClick={logOut} className="flex items-center">
+              <FaDoorClosed /> Logout
+            </button>
+          ) : (
+            <Customlink to="/login">
+              <FaDoorOpen /> Login
+            </Customlink>
+          )}
+        </ul>
+
+        {/* User Avatar */}
+        {user && (
+          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white">
+            {user.photoURL ? (
+              <img src={imageSrc} alt="User Profile" className="w-full h-full object-cover" />
+            ) : (
+              <FaCircleUser className="w-full h-full text-gray-300" />
+            )}
           </div>
-          <a className="btn btn-ghost text-xl">BISTRO BOSS</a>
-        </div>
-        <div className="navbar-end hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 ">{navOptions}</ul>
-        </div>
-        {/* <div className="navbar-end">
-          <a className="btn">Button</a>
-        </div> */}
+        )}
+
+        {/* Mobile Menu Button */}
+        <button onClick={toggleMenu} className="lg:hidden text-white text-2xl">
+          {isOpen ? "✖" : "☰"}
+        </button>
       </div>
-    </div>
+
+      {/* Mobile Dropdown Menu */}
+      {isOpen && (
+        <div className="bg-black/90 py-4 space-y-3 text-center flex flex-col items-center lg:hidden">
+          <Customlink to="/" onClick={toggleMenu}>
+            <FaHouse /> Home
+          </Customlink>
+          <Customlink to="/menu" onClick={toggleMenu}>
+            <FaClipboardList /> Menu
+          </Customlink>
+          {user && (
+            <Customlink to="/order/salad" onClick={toggleMenu}>
+              <FaBowlFood /> Order Food
+            </Customlink>
+          )}
+          <Customlink to="/dashboard/cart" onClick={toggleMenu}>
+            <FaCartShopping />
+            <span className="ml-2 badge badge-secondary">{cart.length}</span>
+          </Customlink>
+          {user ? (
+            <button onClick={logOut} className="flex items-center">
+              <FaDoorClosed /> Logout
+            </button>
+          ) : (
+            <Customlink to="/login" onClick={toggleMenu}>
+              <FaDoorOpen /> Login
+            </Customlink>
+          )}
+        </div>
+      )}
+    </nav>
   );
 };
 

@@ -44,57 +44,17 @@ const Order = () => {
       ></Cover>
 
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-        <TabList className="flex justify-center gap-3 bg-gray-100 p-2 rounded-lg shadow-md">
-          <Tab
-            className={`px-4 py-2 text-lg font-semibold cursor-pointer rounded-lg transition 
-            ${tabIndex === 0
-                ? "bg-orange-500 text-white"
-                : "bg-orange-500 hover:bg-gray-300"
-              }`}
-          >
-            Salad
-          </Tab>
-          <Tab
-            className={`px-4 py-2 text-lg font-semibold cursor-pointer rounded-lg transition 
-            ${tabIndex === 1
-                ? "bg-orange-500 text-white"
-                : "bg-orange-500 hover:bg-gray-300"
-              }`}
-          >
-            Pizza
-          </Tab>
-          <Tab
-            className={`px-4 py-2 text-lg font-semibold cursor-pointer rounded-lg transition 
-            ${tabIndex === 2
-                ? "bg-orange-500 text-white"
-                : "bg-orange-500 hover:bg-gray-300"
-              }`}
-          >
-            Soups
-          </Tab>
-          <Tab
-            className={`px-4 py-2 text-lg font-semibold cursor-pointer rounded-lg transition 
-            ${tabIndex === 3
-                ? "bg-orange-500 text-white"
-                : "bg-orange-500 hover:bg-gray-300"
-              }`}
-          >
-            Desserts
-          </Tab>
-          <Tab
-            className={`px-4 py-2 text-lg font-semibold cursor-pointer rounded-lg transition 
-            ${tabIndex === 4
-                ? "bg-orange-500 text-white"
-                : "bg-orange-500 hover:bg-gray-300"
-              }`}
-          >
-            Drinks
-          </Tab>
-          {/* <Tab >Salad</Tab>
-          <Tab>Pizza</Tab>
-          <Tab>Soups</Tab>
-          <Tab>Desserts</Tab>
-          <Tab>Drinks</Tab> */}
+        <TabList className="flex flex-wrap md:flex-nowrap justify-center gap-3 bg-gray-100 p-2 rounded-lg shadow-md overflow-x-auto">
+          {["Salad", "Pizza", "Soups", "Desserts", "Drinks"].map((item, index) => (
+            <Tab
+              key={index}
+              className={`px-4 py-2 text-lg font-semibold cursor-pointer rounded-lg transition whitespace-nowrap
+        ${tabIndex === index ? "bg-orange-500 text-white" : "bg-orange-500 hover:bg-gray-300"}
+      `}
+            >
+              {item}
+            </Tab>
+          ))}
         </TabList>
 
         <TabPanel >
