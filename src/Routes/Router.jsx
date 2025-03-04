@@ -21,6 +21,7 @@ import Allbookings from "../Pages/Allbookings/Allbookings";
 import Mybooking from "../Pages/Mybooking/Mybooking";
 import UserHome from "../Pages/UserHome/UserHome";
 import Review from "./Review/Review";
+import Contact from "../Pages/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         element: <Login></Login>,
       },
       {
+        path: "/contact",
+        element: <Contact></Contact>,
+      },
+      {
         path: "/signup",
         element: <Signup></Signup>,
       },
@@ -63,7 +68,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'userhome',
-        element: <UserHome></UserHome>
+        element: <Privateroute><UserHome></UserHome></Privateroute>
       },
       {
         path: 'manageusers',
@@ -88,7 +93,7 @@ const router = createBrowserRouter([
       {
         path: 'edititems/:id',
         element: <Adminroute><Edititems></Edititems></Adminroute>,
-        loader: ({ params }) => fetch(`http://localhost:7065/menu/${params.id}`)
+        loader: ({ params }) => fetch(`https://bistro-boss-server-a7ed.onrender.com/menu/${params.id}`)
       },
       {
         path: 'manageitems',

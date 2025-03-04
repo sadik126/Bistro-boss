@@ -18,15 +18,12 @@ const Order = () => {
 
   const [tabIndex, setTabIndex] = useState(initialcategory);
 
-  // if (loading) {
-  //   return <Loading></Loading>
-  // }
+  if (loading) {
+    return <Loading></Loading>
+  }
 
-  console.log(category);
-  // const dessert = menu.filter((item) => {
-  //   item.category === "dessert"
 
-  // });
+
   const soup = menu.filter((item) => item.category === "soup");
   const offered = menu.filter((item) => item.category === "offered");
   const salad = menu.filter((item) => item.category === "salad");

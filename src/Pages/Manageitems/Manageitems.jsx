@@ -8,6 +8,7 @@ import Useaxiossecure, { axiosSecure } from '../Useaxiossecure/Useaxiossecure';
 import axiosPublic from '../axiosPublic/axiosPublic';
 import { Link, useLoaderData } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import Loading from '../Loading/Loading';
 
 const Manageitems = () => {
 
@@ -17,7 +18,7 @@ const Manageitems = () => {
 
 
 
-    const { data: alldata = [], refetch: datafetch } = useQuery({
+    const { data: alldata = [], refetch: datafetch, isLoading: data_loading } = useQuery({
         queryKey: ['allstats'],
         queryFn: async () => {
             const res = await axiosSecure.get('/payment-stats')
@@ -32,7 +33,7 @@ const Manageitems = () => {
     const pages = [...Array(numberofpage).keys()]
 
 
-    const { data: menu = [], refetch } = useQuery({
+    const { data: menu = [], refetch, isLoading } = useQuery({
         queryKey: ['menu'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/allmenu?page=${currentpage}&size=${itemperPage}`)
@@ -47,7 +48,9 @@ const Manageitems = () => {
     }, [currentpage])
 
 
-
+    if (isLoading || data_loading) {
+        return <Loading></Loading>
+    }
 
 
 

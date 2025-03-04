@@ -18,7 +18,7 @@ const Testimonial = () => {
   // const allaxiospublic = axiosPublic()
 
   useEffect(() => {
-    fetch('http://localhost:7065/review')
+    fetch('https://bistro-boss-server-a7ed.onrender.com/review')
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);

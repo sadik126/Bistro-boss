@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Authprovider/Authprovider";
 
 export const axiosSecure = axios.create({
-  baseURL: "http://localhost:7065",
+  baseURL: "https://bistro-boss-server-a7ed.onrender.com",
 });
 const Useaxiossecure = () => {
   const { logOut } = useContext(AuthContext)
@@ -33,7 +33,11 @@ const Useaxiossecure = () => {
     // }
     if (status === 401 || status === 403) {
       await logOut();
-      navigate("/login", { replace: true });
+      useEffect(() => {
+
+        navigate("/login", { replace: true });// ✅ রেন্ডার শেষ হলে নেভিগেট করবে
+      }, [navigate]);
+
     }
     // else if (status === 403) {
     //   console.warn("Access denied: You do not have admin privileges");

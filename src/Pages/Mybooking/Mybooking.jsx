@@ -4,23 +4,31 @@ import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../Authprovider/Authprovider';
 import { format } from 'date-fns';
 import Sectiontitle from '../../Layout/Sectiontitle/Sectiontitle';
+import Loading from '../Loading/Loading';
 
 const Mybooking = () => {
     const { user } = useContext(AuthContext)
     const axiospublic = axiosPublic()
-    const { data: mybooking = [], refetch } = useQuery({
+    const { data: mybooking = [], refetch, isLoading } = useQuery({
         queryKey: ['mybooking'],
         queryFn: async () => {
             const res = await axiospublic.get(`/booking?email=${user?.email}`)
             return res.data;
+
         },
         enabled: !!user?.email
     })
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
+
+    refetch()
     return (
         <>
             <div className="px-4 py-6">
                 {/* Title Section */}
-                <div className='flex flex-col md:flex-row justify-between items-center my-4'>
+                <div className='flex flex-col  justify-between items-center my-4'>
                     <Sectiontitle title="MANAGE ALL BOOKING" subtitle="---Hurry Up!---" />
                 </div>
 

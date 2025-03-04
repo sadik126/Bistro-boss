@@ -5,6 +5,7 @@ import Sectiontitle from '../../Layout/Sectiontitle/Sectiontitle';
 import { SiTicktick } from 'react-icons/si';
 import Swal from 'sweetalert2';
 import { format } from 'date-fns';
+import Loading from '../Loading/Loading';
 
 const Allbookings = () => {
     const allaxiossecure = Useaxiossecure()
@@ -17,6 +18,12 @@ const Allbookings = () => {
         }
     })
 
+    if (isLoading) {
+        return <Loading></Loading>
+    }
+
+
+
     const handlePending = async (id) => {
         await allaxiossecure.patch(`/bookings/admin/${id}`, {
 
@@ -27,7 +34,7 @@ const Allbookings = () => {
                 if (res.data.modifiedCount > 0) {
                     Swal.fire({
                         title: "Thanks for updating!",
-                        text: `the user  has been promoted to Admin`,
+                        text: `the item  has been delivered`,
                         icon: "success"
                     });
                 }
@@ -57,7 +64,7 @@ const Allbookings = () => {
                         <tbody>
                             {/* row 1 */}
                             {
-                                bookings.map((m, index) =>
+                                bookings.slice().reverse().map((m, index) =>
                                     <tr key={m._id} className="bg-base-200">
                                         <th>{index + 1}</th>
 

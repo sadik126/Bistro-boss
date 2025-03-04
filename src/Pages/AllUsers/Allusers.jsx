@@ -3,11 +3,12 @@ import Useaxiossecure from '../Useaxiossecure/Useaxiossecure';
 import { useQuery } from '@tanstack/react-query';
 import { FaTrashCan, FaUsers } from 'react-icons/fa6';
 import Swal from 'sweetalert2';
+import Loading from '../Loading/Loading';
 
 const Allusers = () => {
   const axiosSecure = Useaxiossecure();
   const [role, setRole] = useState("");
-  const { data: users = [], refetch } = useQuery({
+  const { data: users = [], refetch, isLoading } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       const res = await axiosSecure.get('/users', {
@@ -18,6 +19,10 @@ const Allusers = () => {
       return res.data;
     }
   })
+
+  if (isLoading) {
+    return <Loading></Loading>
+  }
 
   const handleadmin = (user) => {
     if (!role) {

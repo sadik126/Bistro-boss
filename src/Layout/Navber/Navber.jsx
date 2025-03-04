@@ -39,80 +39,80 @@ const Navber = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  const navOptions = (
-    <>
-      <li>
-        <Customlink to="/">
-          {" "}
-          <FaHouse></FaHouse> Home
-        </Customlink>
-      </li>
+  // const navOptions = (
+  //   <>
+  //     <li>
+  //       <Customlink to="/">
+  //         {" "}
+  //         <FaHouse></FaHouse> Home
+  //       </Customlink>
+  //     </li>
 
-      <li>
-        <Customlink to="/menu">
-          {" "}
-          <FaClipboardList /> Menu
-        </Customlink>
-      </li>
-      {
-        user && <li>
-          <Customlink to="/order/salad">
-            {" "}
-            <FaBowlFood /> Order food
-          </Customlink>
-        </li>
-      }
-      {/* <li>
-        <Link to="/order/salad">
-          {" "}
-          <FaBowlFood /> Order food
-        </Link>
-      </li> */}
-      <li>
-        <Customlink to="/dashboard/cart">
-          {" "}
-          <button>
-            <FaCartShopping className="mr-2" />
-            <div className="badge badge-secondary ">+{cart.length}</div>
-          </button>
-        </Customlink>
-      </li>
-      <li>
-        {user ? (
-          <button onClick={logOut}>
-            {/* <button onClick={logOut} className="text-white">
-              
-            </button> */}
-            <FaDoorClosed /> Logout
-          </button>
-        ) : (
-          <Customlink to="/login">
-            {" "}
-            <FaDoorOpen /> Login
-          </Customlink>
-        )}
-      </li>
-      <li>
-        {user && (
-          <div className="avatar">
-            <div className="w-8 rounded-full">
-              {user?.photoURL !== null ? (
-                <>
-                  <img src={imageSrc} alt="User Profile" className="w-10 h-10 rounded-full object-cover" />
-                </>
-              ) : (
-                <>
-                  <FaCircleUser style={{ width: "30px", height: "30px" }} />
-                </>
-              )}
-              {/* <img src={user?.photoURL} alt="" /> */}
-              {/* {console.log(user)} */}
-            </div>
-          </div>
-        )}
-      </li>
-    </>
-  );
+  //     <li>
+  //       <Customlink to="/menu">
+  //         {" "}
+  //         <FaClipboardList /> Menu
+  //       </Customlink>
+  //     </li>
+  //     {
+  //       user && <li>
+  //         <Customlink to="/order/salad">
+  //           {" "}
+  //           <FaBowlFood /> Order food
+  //         </Customlink>
+  //       </li>
+  //     }
+  //     {/* <li>
+  //       <Link to="/order/salad">
+  //         {" "}
+  //         <FaBowlFood /> Order food
+  //       </Link>
+  //     </li> */}
+  //     <li>
+  //       <Customlink to="/dashboard/cart">
+  //         {" "}
+  //         <button>
+  //           <FaCartShopping className="mr-2" />
+  //           <div className="badge badge-secondary ">+{cart.length}</div>
+  //         </button>
+  //       </Customlink>
+  //     </li>
+  //     <li>
+  //       {user ? (
+  //         <button onClick={logOut}>
+  //           {/* <button onClick={logOut} className="text-white">
+
+  //           </button> */}
+  //           <FaDoorClosed /> Logout
+  //         </button>
+  //       ) : (
+  //         <Customlink to="/login">
+  //           {" "}
+  //           <FaDoorOpen /> Login
+  //         </Customlink>
+  //       )}
+  //     </li>
+  //     <li>
+  //       {user && (
+  //         <div className="avatar">
+  //           <div className="w-8 rounded-full">
+  //             {user?.photoURL !== null ? (
+  //               <>
+  //                 <img src={imageSrc} alt="User Profile" className="w-10 h-10 rounded-full object-cover" />
+  //               </>
+  //             ) : (
+  //               <>
+  //                 <FaCircleUser style={{ width: "30px", height: "30px" }} />
+  //               </>
+  //             )}
+  //             {/* <img src={user?.photoURL} alt="" /> */}
+  //             {/* {console.log(user)} */}
+  //           </div>
+  //         </div>
+  //       )}
+  //     </li>
+  //   </>
+  // );
   return (
     <nav className="fixed top-0 left-0 w-full bg-black/40 backdrop-blur-md text-white z-50 shadow-lg">
       <div className="max-w-7xl mx-auto px-5 flex items-center justify-between py-3">

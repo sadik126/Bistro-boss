@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaAmazonPay, FaCalendarCheck, FaCalendarDays, FaCartPlus, FaComment, FaHouseUser, FaSearchengin } from 'react-icons/fa6';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import { IoIosContacts } from "react-icons/io";
 import { ImSpoonKnife } from "react-icons/im";
 import { IoIosMenu } from "react-icons/io";
@@ -9,6 +9,7 @@ import { FaUsers } from "react-icons/fa";
 import { use } from 'react';
 import Useadmin from '../Useadmin/Useadmin';
 import Loading from '../Loading/Loading';
+import { IoFastFood } from 'react-icons/io5';
 
 
 const Dashboard = () => {
@@ -23,7 +24,7 @@ const Dashboard = () => {
         <div className="flex-none lg:flex">
             {/* Button for Small Screens */}
             <button
-                className="lg:hidden fixed top-4 left-4 bg-orange-500 text-white p-2 rounded-md z-50"
+                className="lg:hidden fixed top-4 left-4 bg-black text-white p-2 rounded-md z-50"
                 onClick={() => setIsOpen(true)}
             >
                 ☰ Menu
@@ -42,10 +43,15 @@ const Dashboard = () => {
                     ✕
                 </button>
 
-                <div className="font-extrabold text-center py-4">
+                {/* <div className="font-extrabold text-center py-4">
                     <h2 className="text-4xl">Bistro Boss</h2>
                     <p>Restaurant</p>
-                </div>
+                </div> */}
+
+                <Link to="/" className="text-2xl  tracking-widest flex font-extrabold text-center py-4">
+                    <IoFastFood />
+                    <span className="text-orange-700 ml-3">BISTRO </span> BOSS
+                </Link>
 
                 <ul className="menu p-4 space-y-2">
                     {isAdmin ? (
@@ -68,7 +74,7 @@ const Dashboard = () => {
 
                     <li><NavLink to="/"><FaHouseUser /> Home</NavLink></li>
                     <li><NavLink to="/menu"><FaSearchengin /> Menu</NavLink></li>
-                    <li><NavLink to="/dashboard/contact"><IoIosContacts /> Contact</NavLink></li>
+                    <li><NavLink to="/contact"><IoIosContacts /> Contact</NavLink></li>
                     <li><NavLink to="/dashboard/cart"><FaCartPlus /> My Cart</NavLink></li>
                 </ul>
             </div>

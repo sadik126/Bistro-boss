@@ -6,7 +6,7 @@ const useMenu = () => {
 
   const refetch = () => {
     setLoading(true);
-    fetch("http://localhost:7065/menu")
+    fetch("https://bistro-boss-server-a7ed.onrender.com/menu")
       .then((res) => res.json())
       .then((data) => {
         setMenuData(data);

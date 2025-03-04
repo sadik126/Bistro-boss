@@ -18,6 +18,8 @@ const Checkform = () => {
 
     const [transationId, settransationId] = useState('')
 
+    const [isProcessing, setIsProcessing] = useState(false);
+
     const [clientSecret, setClientSecret] = useState('')
 
     const [cart, refetch] = Usecart()
@@ -56,6 +58,8 @@ const Checkform = () => {
             setError("Card element not found");
             return;
         }
+
+        setIsProcessing(true);
 
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
@@ -125,25 +129,19 @@ const Checkform = () => {
 
 
 
-        // if (error) {
-        //     console.log('[error]', error);
-        //     setError(error.message);
-        // } else {
-        //     console.log('[PaymentMethod]', paymentMethod);
-        //     setError('')
-        // }
+        setIsProcessing(false);
     }
     return (
 
-        <form onSubmit={handleSubmit} className='my-4 p-10'>
-            <CardElement options={{
+        <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4">
+            <CardElement className="p-2 border rounded" options={{
                 style: {
-                    base: { fontSize: '16px', color: '#424770', '::placeholder': { color: '#aab7c4' } },
+                    base: { fontSize: '16px', color: 'blue', '::placeholder': { color: 'black' } },
                     invalid: { color: '#9e2146' },
                 },
             }} />
-            <button className='btn btn-primary mt-10' type="submit" disabled={!stripe || !clientSecret}>
-                Pay
+            <button className='btn btn-primary mt-10' type="submit" disabled={!stripe || !clientSecret || isProcessing}>
+                {isProcessing ? 'Processing...' : 'Pay'}
             </button>
 
             <p className='text-red-700'>{error}</p>

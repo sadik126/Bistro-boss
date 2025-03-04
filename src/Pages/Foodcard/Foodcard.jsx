@@ -76,7 +76,7 @@ const Foodcard = ({ item }) => {
           Swal.fire("Error", "Failed to add item to cart.", "error");
         })
 
-      // fetch("http://localhost:7065/carts", {
+      // fetch("https://bistro-boss-server-a7ed.onrender.com/carts", {
       //   method: "POST",
       //   headers: {
       //     "content-type": "application/json",
